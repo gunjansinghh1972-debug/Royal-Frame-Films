@@ -1,0 +1,11 @@
+packages:
+  "framer-motion": "For smooth scroll reveal animations, staggering gallery items, and luxury cinematic transitions."
+  "lucide-react": "For icons."
+  "clsx": "Utility for constructing className strings conditionally."
+  "tailwind-merge": "Utility function to efficiently merge Tailwind CSS classes in JS without style conflicts."
+
+images: []
+
+notes:
+  - This is a frontend-only single page application. No backend endpoints are required.
+  - Smooth scrolling is implemented using native CSS scroll-behavior.
