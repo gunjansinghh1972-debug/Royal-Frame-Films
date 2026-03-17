@@ -45,42 +45,44 @@
 }
 
 :root {
-  /* Dark luxury theme by default */
-  --background: 0 0% 4%; /* #0a0a0a */
-  --foreground: 0 0% 98%; /* #fafafa */
+  --background: 0 0% 4%;
+  --foreground: 0 0% 96%;
   
-  --card: 0 0% 7%; /* #121212 */
-  --card-foreground: 0 0% 98%;
-  --card-border: 0 0% 12%; /* #1e1e1e */
+  --card: 0 0% 7%;
+  --card-foreground: 0 0% 96%;
+  --card-border: 0 0% 12%;
   
   --popover: 0 0% 7%;
-  --popover-foreground: 0 0% 98%;
+  --popover-foreground: 0 0% 96%;
   --popover-border: 0 0% 12%;
   
-  /* Primary is Gold (#D4AF37) */
-  --primary: 46 65% 52%; 
-  --primary-foreground: 0 0% 100%;
+  --primary: 43 74% 52%;
+  --primary-foreground: 0 0% 5%;
   
-  --secondary: 0 0% 12%;
-  --secondary-foreground: 0 0% 98%;
+  --secondary: 0 0% 10%;
+  --secondary-foreground: 0 0% 96%;
   
-  --muted: 0 0% 12%;
-  --muted-foreground: 0 0% 63%;
+  --muted: 0 0% 11%;
+  --muted-foreground: 0 0% 58%;
   
-  --accent: 46 65% 52%;
-  --accent-foreground: 0 0% 100%;
+  --accent: 43 74% 52%;
+  --accent-foreground: 0 0% 5%;
   
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
   
-  --border: 0 0% 15%;
-  --input: 0 0% 15%;
-  --ring: 46 65% 52%;
+  --border: 0 0% 14%;
+  --input: 0 0% 14%;
+  --ring: 43 74% 52%;
   
   --app-font-sans: 'Poppins', sans-serif;
   --app-font-serif: 'Playfair Display', serif;
   
   --radius: 0.5rem;
+
+  --gold-light: #F0D060;
+  --gold-mid:   #D4AF37;
+  --gold-dark:  #B8922A;
 }
 
 @layer base {
@@ -89,11 +91,13 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground selection:bg-primary/30 selection:text-primary-foreground;
+    @apply font-sans antialiased bg-background text-foreground;
+    selection-color: hsl(var(--primary) / 0.3);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif tracking-tight;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: -0.01em;
   }
 
   * {
@@ -103,10 +107,134 @@
 
 @layer utilities {
   .text-gradient-gold {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#D4AF37];
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-mid) 45%, var(--gold-dark) 70%, var(--gold-mid) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   
   .bg-gradient-gold {
-    @apply bg-gradient-to-r from-[#D4AF37] to-[#C9A84C];
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-mid) 50%, var(--gold-dark) 100%);
   }
+
+  /* Cinematic letter spacing for labels */
+  .label-cinematic {
+    letter-spacing: 0.22em;
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+/* ─── Button shine sweep ──────────────────────────────────── */
+@keyframes shine-sweep {
+  0%   { left: -80%; }
+  60%  { left: 120%; }
+  100% { left: 120%; }
+}
+
+.btn-gold {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-mid) 50%, var(--gold-dark) 100%);
+  color: #0a0a0a;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+.btn-gold::after {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: -80%;
+  width: 50%;
+  height: 160%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform: skewX(-20deg);
+  animation: shine-sweep 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(212,175,55,0.35), 0 2px 10px rgba(212,175,55,0.2);
+  filter: brightness(1.08);
+}
+
+.btn-gold:active {
+  transform: translateY(0px);
+  box-shadow: 0 3px 12px rgba(212,175,55,0.25);
+}
+
+/* ─── Button outline gold ─────────────────────────────────── */
+.btn-outline-gold {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  border: 1.5px solid var(--gold-mid);
+  color: var(--gold-mid);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
+}
+
+.btn-outline-gold::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-mid) 50%, var(--gold-dark) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.btn-outline-gold span {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-outline-gold:hover {
+  color: #0a0a0a;
+  border-color: var(--gold-light);
+  box-shadow: 0 6px 24px rgba(212,175,55,0.3), 0 0 0 1px rgba(212,175,55,0.1);
+  transform: translateY(-2px);
+}
+
+.btn-outline-gold:hover::before {
+  opacity: 1;
+}
+
+.btn-outline-gold:active {
+  transform: translateY(0);
+}
+
+/* ─── Gallery image zoom ──────────────────────────────────── */
+.gallery-item img {
+  transition: transform 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.1);
+}
+
+/* ─── Thin gold divider line ─────────────────────────────── */
+.gold-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-mid), transparent);
+}
+
+/* ─── Section separator ──────────────────────────────────── */
+.section-sep {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, hsl(var(--border)) 30%, hsl(var(--border)) 70%, transparent 100%);
+}
+
+/* ─── Text shadow for hero ────────────────────────────────── */
+.text-shadow-cinematic {
+  text-shadow: 0 4px 40px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4);
 }

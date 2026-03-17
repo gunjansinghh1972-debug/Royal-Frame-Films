@@ -1,6 +1,18 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
+import { Send } from "lucide-react";
+
+const inputClass = `
+  w-full bg-transparent px-0 py-3 text-sm text-foreground
+  border-0 border-b border-border/50
+  focus:outline-none focus:border-[#D4AF37]
+  placeholder:text-muted-foreground/50
+  transition-colors duration-300
+  font-sans
+`;
+
+const labelClass = "block text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-sans mb-1";
 
 export function Booking() {
   const { toast } = useToast();
@@ -9,120 +21,153 @@ export function Booking() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false);
       toast({
         title: "Inquiry Sent Successfully",
         description: "Thank you! We'll contact you within 24 hours.",
-        variant: "default",
       });
       (e.target as HTMLFormElement).reset();
     }, 1500);
   };
 
   return (
-    <section id="contact" className="py-24 md:py-32 bg-background relative overflow-hidden">
-      {/* Decorative background element */}
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
-      
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="bg-card border border-border/50 rounded-3xl p-8 md:p-14 shadow-2xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+    <section id="contact" className="py-28 md:py-36 bg-background relative overflow-hidden">
+      {/* Background accent */}
+      <div
+        className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] pointer-events-none opacity-[0.04]"
+        style={{ background: "radial-gradient(circle, #D4AF37, transparent 70%)" }}
+      />
+      <div
+        className="absolute bottom-0 left-0 w-[300px] h-[300px] pointer-events-none opacity-[0.03]"
+        style={{ background: "radial-gradient(circle, #D4AF37, transparent 70%)" }}
+      />
+
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Heading */}
+        <div className="text-center mb-16 md:mb-20">
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-[#D4AF37] label-cinematic mb-4"
+          >
+            Let's Connect
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            transition={{ duration: 0.7 }}
+            className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4"
           >
-            <h2 className="text-4xl md:text-5xl font-serif mb-4">
-              Book Your <span className="text-gradient-gold">Date</span>
-            </h2>
-            <p className="text-muted-foreground">
-              Fill out the form below and let's start planning your dream visual story.
-            </p>
-          </motion.div>
+            Book Your <span className="text-gradient-gold">Date</span>
+          </motion.h2>
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="w-16 h-px mx-auto mb-6"
+            style={{ background: "linear-gradient(90deg, transparent, #D4AF37, transparent)" }}
+          />
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="text-muted-foreground text-base"
+          >
+            Fill out the form below and let's start planning your dream visual story.
+          </motion.p>
+        </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground/80">Full Name</label>
-                <input
-                  required
-                  type="text"
-                  placeholder="John & Jane"
-                  className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
-                />
+        {/* Form Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+          className="relative"
+          style={{
+            background: "hsl(var(--card))",
+            border: "1px solid rgba(212,175,55,0.15)",
+            borderRadius: "2px",
+            padding: "3rem 3rem",
+          }}
+        >
+          {/* Corner accents */}
+          <div className="absolute top-0 left-0 w-10 h-10 border-t border-l border-[#D4AF37]/40" />
+          <div className="absolute top-0 right-0 w-10 h-10 border-t border-r border-[#D4AF37]/40" />
+          <div className="absolute bottom-0 left-0 w-10 h-10 border-b border-l border-[#D4AF37]/40" />
+          <div className="absolute bottom-0 right-0 w-10 h-10 border-b border-r border-[#D4AF37]/40" />
+
+          <form onSubmit={handleSubmit} className="space-y-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <label className={labelClass}>Full Name</label>
+                <input required type="text" placeholder="John & Jane Doe" className={inputClass} />
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground/80">Phone Number</label>
-                <input
-                  required
-                  type="tel"
-                  placeholder="+91 98765 43210"
-                  className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
-                />
+              <div>
+                <label className={labelClass}>Phone Number</label>
+                <input required type="tel" placeholder="+91 98765 43210" className={inputClass} />
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground/80">Email Address</label>
-                <input
-                  required
-                  type="email"
-                  placeholder="hello@example.com"
-                  className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
-                />
+              <div>
+                <label className={labelClass}>Email Address</label>
+                <input required type="email" placeholder="hello@example.com" className={inputClass} />
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground/80">Event Date</label>
+              <div>
+                <label className={labelClass}>Event Date</label>
                 <input
                   required
                   type="date"
-                  className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all [color-scheme:dark]"
+                  className={`${inputClass} [color-scheme:dark]`}
                 />
               </div>
-              <div className="space-y-2 md:col-span-2">
-                <label className="text-sm font-medium text-foreground/80">Event Type</label>
-                <select 
+              <div className="md:col-span-2">
+                <label className={labelClass}>Event Type</label>
+                <select
                   required
-                  className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all appearance-none"
+                  defaultValue=""
+                  className={`${inputClass} cursor-pointer appearance-none`}
+                  style={{ background: "transparent" }}
                 >
-                  <option value="" disabled selected>Select an event type</option>
+                  <option value="" disabled>Select an event type</option>
                   <option value="wedding">Wedding</option>
                   <option value="pre-wedding">Pre-Wedding Shoot</option>
                   <option value="anniversary">Anniversary</option>
                   <option value="other">Other Event</option>
                 </select>
               </div>
-              <div className="space-y-2 md:col-span-2">
-                <label className="text-sm font-medium text-foreground/80">Message & Details</label>
+              <div className="md:col-span-2">
+                <label className={labelClass}>Message &amp; Details</label>
                 <textarea
                   required
                   rows={4}
-                  placeholder="Tell us about your venue, themes, and what you're looking for..."
-                  className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none"
-                ></textarea>
+                  placeholder="Tell us about your venue, themes, and what you envision..."
+                  className={`${inputClass} resize-none`}
+                />
               </div>
             </div>
 
-            <motion.div 
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="pt-4"
-            >
+            <div className="pt-2 flex justify-center">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 rounded-xl bg-gradient-gold text-background font-bold text-lg hover:shadow-lg hover:shadow-primary/20 transition-all disabled:opacity-70 flex justify-center items-center"
+                className="btn-gold px-16 py-4 text-sm flex items-center gap-3 disabled:opacity-60 rounded-sm"
               >
                 {isSubmitting ? (
-                  <div className="w-6 h-6 border-2 border-background border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-5 h-5 border-2 border-[#0a0a0a]/40 border-t-[#0a0a0a] rounded-full animate-spin" />
                 ) : (
-                  "Send Inquiry"
+                  <>
+                    <span>Send Inquiry</span>
+                    <Send className="w-4 h-4" />
+                  </>
                 )}
               </button>
-            </motion.div>
+            </div>
           </form>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
